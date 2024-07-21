@@ -1,4 +1,4 @@
-# Library Management System (LMS) - Project Documentation
+# Library Management System Test (LMSTest) - Project Documentation
 
 ## Overview
 
