@@ -25,10 +25,11 @@ void testGetAllBooks() {
 ```
 
 ### 2. Integration Testing
--**Tool/Framework:** JUnit
-**Description:** Integration tests validate the interaction between modules. Scenarios tested include:
--**Adding and updating books
--**Performing transactions
+- **Tool/Framework:** JUnit
+- **Description:** Integration tests validate the interaction between modules. Scenarios tested include:
+- Adding and updating books
+- Performing transactions
+
 **Example**
 
 ```
@@ -42,8 +43,8 @@ void testCreateBook() {
 ```
 
 ### 3.  Mocking and Stubbing
--**Tool/Framework:** Mockito
--**Description:** Mockito is used for mocking dependencies and isolating components during testing.
+- **Tool/Framework:** Mockito
+- **Description:** Mockito is used for mocking dependencies and isolating components during testing.
 
 **Example**
 ```
@@ -61,8 +62,8 @@ void setUp() {
 
 
 ### 4. Parameterized Testing
--**Tool/Framework:** JUnit Parameterized Tests
--**Description:** Tests are written with various input combinations to ensure robustness.
+- **Tool/Framework:** JUnit Parameterized Tests
+- **Description:** Tests are written with various input combinations to ensure robustness.
 
 **Example**
 ```
@@ -77,8 +78,8 @@ assertEquals(book, response.getBody());
 ```
 
 ### 5. Exception Handling
-   -**Tool/Framework:** JUnit
-   -**Description:** Tests ensure that exceptions are handled gracefully.
+   - **Tool/Framework:** JUnit
+   - **Description:** Tests ensure that exceptions are handled gracefully.
    **Example Exception Handling Test:**
 
 ```
@@ -90,8 +91,8 @@ void testGetBookByIdNotFound() {
 }
 ```
 ### 6. Code Coverage Analysis
-   -**Tool/Framework:** JaCoCo
-   -**Description:** JaCoCo is used to measure code coverage and ensure high coverage.
+   - **Tool/Framework:** JaCoCo
+   - **Description:** JaCoCo is used to measure code coverage and ensure high coverage.
    **Generating Code Coverage Report:**
 ```
 mvn jacoco:report
