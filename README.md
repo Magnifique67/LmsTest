@@ -2,7 +2,7 @@
 
 ## Overview
 
-The Library Management System (LMS) project is designed to manage books, patrons, and transactions. This documentation provides an overview of the project, including features, testing strategies, and instructions for setup and usage.
+The Library Management System Test (LMSTest) This documentation provides an overview of the project, including features, testing strategies, and instructions for setup and usage.
 
 ## Project Features
 
@@ -14,7 +14,8 @@ The Library Management System (LMS) project is designed to manage books, patrons
     - **BookService:** Business logic for book management.
 
 **Example Unit Test:**
-```@Test
+```
+@Test
 void testGetAllBooks() {
     when(bookService.findAllBooks()).thenReturn(Collections.singletonList(book));
     ResponseEntity<?> response = bookController.getAllBooks();
@@ -30,7 +31,8 @@ void testGetAllBooks() {
 -**Performing transactions
 **Example**
 
-```@Test
+```
+@Test
 void testCreateBook() {
     when(bookService.saveBook(any(Book.class))).thenReturn(book);
     ResponseEntity<?> response = bookController.createBook(book);
@@ -44,7 +46,8 @@ void testCreateBook() {
 -**Description:** Mockito is used for mocking dependencies and isolating components during testing.
 
 **Example**
-```@Mock
+```
+@Mock
 private BookService bookService;
 
 @InjectMocks
@@ -62,7 +65,8 @@ void setUp() {
 -**Description:** Tests are written with various input combinations to ensure robustness.
 
 **Example**
-```@ParameterizedTest
+```
+@ParameterizedTest
 @ValueSource(longs = {1L, 2L, 3L})
 void testGetBookById(Long id) {
 when(bookService.findBookById(id)).thenReturn(Optional.of(book));
@@ -77,7 +81,8 @@ assertEquals(book, response.getBody());
    -**Description:** Tests ensure that exceptions are handled gracefully.
    **Example Exception Handling Test:**
 
-```@Test
+```
+@Test
 void testGetBookByIdNotFound() {
     when(bookService.findBookById(anyLong())).thenReturn(Optional.empty());
     ResponseEntity<?> response = bookController.getBookById(999L);
