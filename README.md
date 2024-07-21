@@ -88,7 +88,8 @@ void testGetBookByIdNotFound() {
    -**Tool/Framework:** JaCoCo
    -**Description:** JaCoCo is used to measure code coverage and ensure high coverage.
    **Generating Code Coverage Report:**
-```mvn jacoco:report
+```
+mvn jacoco:report
 ```
 ### Getting Started
 #### Prerequisites
@@ -99,11 +100,18 @@ void testGetBookByIdNotFound() {
 - JaCoCo: For code coverage
 
 **run**
-```mvn clean install
+```
+mvn clean install
 ```
 **then**
-```mvn test
+```
+mvn test
 ```
 **Generating Code Coverage Report**
-```mvn jacoco:report
 ```
+mvn jacoco:report
+```
+
+### Loom video
+
+### https://www.loom.com/share/420011ebb0f34957aed61aaf627aa1bb
