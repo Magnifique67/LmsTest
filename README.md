@@ -2,7 +2,7 @@
 
 ## Overview
 
-The Library Management System (LMS) project is designed to manage books, patrons, and transactions. This documentation provides an overview of the project, including features, testing strategies, and instructions for setup and usage.
+The Library Management System Test (LMSTest) This documentation provides an overview of the project, including features, testing strategies, and instructions for setup and usage.
 
 ## Project Features
 
