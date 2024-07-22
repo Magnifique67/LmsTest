@@ -16,6 +16,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 public class BookControllerTest {
@@ -70,5 +71,11 @@ public class BookControllerTest {
         assertEquals(book, response.getBody());
     }
 
+    @Test
+    void testDeleteBook() {
+        doNothing().when(bookService).deleteBook(anyLong());
 
+        ResponseEntity<?> response = bookController.deleteBook(1L);
+        assertEquals(204, response.getStatusCodeValue());
+    }
 }

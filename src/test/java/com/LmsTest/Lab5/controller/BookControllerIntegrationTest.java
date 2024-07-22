@@ -1,60 +1,91 @@
 package com.LmsTest.Lab5.controller;
 
-import com.LmsTest.Lab5.service.BookService;
+import com.LmsTest.Lab5.entity.Book;
+import com.LmsTest.Lab5.repository.BookRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(BookController.class)
+@SpringBootTest
+@AutoConfigureMockMvc
+@Transactional
 public class BookControllerIntegrationTest {
 
     @Autowired
     private MockMvc mockMvc;
 
-    @Mock
-    private BookService bookService;
+    @Autowired
+    private BookRepository bookRepository;
 
-    @InjectMocks
-    private BookController bookController;
+    @Autowired
+    private ObjectMapper objectMapper;
+
+    private Book testBook;
 
     @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
+    public void setUp() {
+        bookRepository.deleteAll();
+        testBook = new Book();
+        testBook.setTitle("Test Book");
+        testBook.setAuthor("Test Author");
+        testBook.setIsbn("123456789");
+        testBook.setAvailability(true);
+        bookRepository.save(testBook);
     }
 
     @Test
-    void testDeleteBook_Success() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.delete("/books/1"))
-                .andExpect(MockMvcResultMatchers.status().isNoContent());
+    public void testGetAllBooks() throws Exception {
+        mockMvc.perform(get("/books"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].title").value(testBook.getTitle()));
     }
 
     @Test
-    void testDeleteBook_NotFound() throws Exception {
-        // Simulate a case where the book is not found
-        doThrow(new RuntimeException("Book not found")).when(bookService).deleteBook(anyLong());
-
-        mockMvc.perform(MockMvcRequestBuilders.delete("/books/999"))
-                .andExpect(MockMvcResultMatchers.status().isNotFound());
+    public void testGetBookById() throws Exception {
+        mockMvc.perform(get("/books/" + testBook.getId()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.title").value(testBook.getTitle()));
     }
 
     @Test
-    void testDeleteBook_InternalServerError() throws Exception {
-        // Simulate an unexpected error
-        doThrow(new RuntimeException("Unexpected error")).when(bookService).deleteBook(anyLong());
+    public void testCreateBook() throws Exception {
+        Book newBook = new Book();
+        newBook.setTitle("New Book");
+        newBook.setAuthor("New Author");
+        newBook.setIsbn("987654321");
+        newBook.setAvailability(true);
 
-        mockMvc.perform(MockMvcRequestBuilders.delete("/books/1"))
-                .andExpect(MockMvcResultMatchers.status().isInternalServerError());
+        mockMvc.perform(post("/books")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(newBook)))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.title").value("New Book"));
+    }
+
+    @Test
+    public void testUpdateBook() throws Exception {
+        testBook.setTitle("Updated Title");
+
+        mockMvc.perform(put("/books/" + testBook.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(testBook)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.title").value("Updated Title"));
+    }
+
+    @Test
+    public void testDeleteBook() throws Exception {
+        mockMvc.perform(delete("/books/" + testBook.getId()))
+                .andExpect(status().isNoContent());
     }
 }

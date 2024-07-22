@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.Date;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.cglib.core.Local;
@@ -15,6 +16,7 @@ import org.springframework.cglib.core.Local;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,6 +32,6 @@ public class Transaction {
 
     private LocalDate issueDate;
     private LocalDate dueDate;
-    private String type; // e.g., "borrow" or "return"
+    private String type;
     private LocalDate returnDate;
 }

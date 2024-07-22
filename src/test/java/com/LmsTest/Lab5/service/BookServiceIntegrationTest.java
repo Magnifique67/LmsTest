@@ -1,10 +1,8 @@
 package com.LmsTest.Lab5.service;
 
 import com.LmsTest.Lab5.entity.Book;
-import com.LmsTest.Lab5.entity.Transaction;
 import com.LmsTest.Lab5.repository.BookRepository;
 import com.LmsTest.Lab5.repository.TransactionRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.when;
+
 
 @SpringBootTest
 @Transactional

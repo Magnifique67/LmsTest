@@ -5,6 +5,7 @@ import com.LmsTest.Lab5.repository.BookRepository;
 import com.LmsTest.Lab5.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -36,7 +37,7 @@ public class BookService {
         }
         return Optional.empty();
     }
-
+@Transactional
     public void deleteBook(Long bookId) {
         // First delete all transactions related to the book
         transactionRepository.deleteByBookId(bookId);

@@ -121,3 +121,6 @@ mvn jacoco:report
 ### Loom video
 
 ### https://www.loom.com/share/420011ebb0f34957aed61aaf627aa1bb
+
+### Jacoco report
+![img.png](img.png)

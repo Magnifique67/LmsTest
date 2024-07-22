@@ -1,6 +1,7 @@
 package com.LmsTest.Lab5.entity;
 
 import java.util.Date;
+import java.util.List;
 
 import jakarta.persistence.*;
 
@@ -23,4 +24,17 @@ public class Book {
     private String isbn;
     private Date publishedDate;
     private boolean availability;
+
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Transaction> transactions;
+
+    // Additional constructor without transactions
+    public Book(Long id, String title, String author, String isbn, Date publishedDate, boolean availability) {
+        this.id = id;
+        this.title = title;
+        this.author = author;
+        this.isbn = isbn;
+        this.publishedDate = publishedDate;
+        this.availability = availability;
+    }
 }
