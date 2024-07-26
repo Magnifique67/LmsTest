@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
@@ -77,4 +78,31 @@ public class PatronControllerTest {
         ResponseEntity<Void> response = patronController.deletePatron(1L);
         assertEquals(204, response.getStatusCodeValue());
     }
+    @Test
+    void testGetPatronById_NotFound() {
+        when(patronService.findPatronById(anyLong())).thenReturn(Optional.empty());
+
+        ResponseEntity<Patron> response = patronController.getPatronById(1L);
+        assertEquals(404, response.getStatusCodeValue()); // Expecting a 404 Not Found status
+        assertEquals(null, response.getBody());
+    }
+
+    @Test
+    void testUpdatePatron_NotFound() {
+        when(patronService.updatePatron(anyLong(), any(Patron.class))).thenReturn(Optional.empty());
+
+        ResponseEntity<Patron> response = patronController.updatePatron(1L, patron);
+        assertEquals(404, response.getStatusCodeValue()); // Expecting a 404 Not Found status
+        assertEquals(null, response.getBody());
+    }
+    @Test
+    void testDeletePatron_NotFound() {
+        when(patronService.deletePatron(anyLong())).thenReturn(false);
+
+        ResponseEntity<Void> response = patronController.deletePatron(1L);
+        assertEquals(404, response.getStatusCodeValue()); // Expecting a 404 Not Found status
+        assertNull(response.getBody());
+    }
+
+
 }

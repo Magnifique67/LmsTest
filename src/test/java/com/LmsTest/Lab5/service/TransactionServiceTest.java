@@ -107,9 +107,21 @@ public class TransactionServiceTest {
             transactionService.borrowBook(1L, 1L);
         });
 
+
         assertEquals("Book not available", thrown.getMessage());
         verify(bookRepository, never()).save(any(Book.class));
         verify(transactionRepository, never()).save(any(Transaction.class));
+    }
+    @Test
+    void borrowBook_BookNotFound() {
+        when(patronRepository.findById(anyLong())).thenReturn(Optional.of(new Patron()));
+        when(bookRepository.findById(anyLong())).thenReturn(Optional.empty());
+
+        RuntimeException thrown = assertThrows(RuntimeException.class, () -> {
+            transactionService.borrowBook(1L, 1L);
+        });
+
+        assertEquals("Book not available", thrown.getMessage());
     }
 
     @Test

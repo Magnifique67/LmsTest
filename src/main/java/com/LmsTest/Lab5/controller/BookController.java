@@ -46,13 +46,10 @@ public class BookController {
     public ResponseEntity<Void> deleteBook(@PathVariable Long id) {
         try {
             bookService.deleteBook(id);
-            return ResponseEntity.noContent().build();
-        } catch (RuntimeException e) {
-            // Handle specific exceptions if necessary, or log and return a generic error
-            return ResponseEntity.notFound().build();
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception e) {
-            // Handle unexpected exceptions
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            // You can log the exception or handle it accordingly
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

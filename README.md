@@ -116,7 +116,7 @@ mvn test
 **Generating Code Coverage Report**
 ```
 mvn jacoco:report
-```
+```Text
 
 ### Loom video
 
